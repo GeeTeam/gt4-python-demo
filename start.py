@@ -39,10 +39,10 @@ class LoginHandler(tornado.web.RequestHandler):
             "captcha_output": captcha_output,
             "pass_token": pass_token,
             "gen_time": gen_time,
-            "captcha_id": captcha_id,
             "sign_token": sign_token,
         }
-        url = api_server + '/validate'
+        # captcha_id 参数建议放在 url 后面, 方便请求异常时可以在日志中根据id快速定位到异常请求
+        url = api_server + '/validate' + '?captcha_id={}'.format(captcha_id)
         # 注意处理接口异常情况，当请求极验二次验证接口异常时做出相应异常处理
         # 保证不会因为接口请求超时或服务未响应而阻碍业务流程
         try:
@@ -53,9 +53,9 @@ class LoginHandler(tornado.web.RequestHandler):
 
         # 5.根据极验返回的用户验证状态, 网站主进行自己的业务逻辑
         if gt_msg['result'] == 'success':
-            self.write({'login': 'success'})
+            self.write({'login': 'success', 'reason': gt_msg['reason']})
         else:
-            self.write({'login': 'fail'})
+            self.write({'login': 'fail', 'reason': gt_msg['reason']})
 
 
 if __name__ == '__main__':
