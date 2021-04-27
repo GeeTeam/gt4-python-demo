@@ -21,10 +21,10 @@ class LoginHandler(tornado.web.RequestHandler):
         api_server = 'http://gcaptcha4.geetest.com'
 
         # 2.获取用户验证后前端传过来的验证流水号等参数
-        lot_number = self.get_argument('lotNumber', '')
-        captcha_output = self.get_argument('captchaOutput', '')
-        pass_token = self.get_argument('passToken', '')
-        gen_time = self.get_argument('genTime', '')
+        lot_number = self.get_argument('lot_number', '')
+        captcha_output = self.get_argument('captcha_output', '')
+        pass_token = self.get_argument('pass_token', '')
+        gen_time = self.get_argument('gen_time', '')
 
         # 3.生成签名
         # 生成签名使用标准的hmac算法，使用用户当前完成验证的流水号lot_number作为原始消息message，使用客户验证私钥作为key
