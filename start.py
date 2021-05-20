@@ -47,6 +47,7 @@ class LoginHandler(tornado.web.RequestHandler):
         # 保证不会因为接口请求超时或服务未响应而阻碍业务流程
         try:
             res = requests.post(url, query)
+            assert res.status_code == 200
             gt_msg = json.loads(res.text)
         except Exception as e:
             gt_msg = {'result': 'success', 'reason': 'request geetest api fail'}
