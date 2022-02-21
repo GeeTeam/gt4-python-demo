@@ -44,7 +44,7 @@ python3 start.py
 
 *en:*
 ## Run demo
-1.python version: 7.2  
+1.python version: 3.5  
 2.Start process:  
 ```shell
 cd gt4-python-demo
