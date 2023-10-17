@@ -17,7 +17,7 @@ class LoginHandler(tornado.web.RequestHandler):
     def post(self):
         # 1.初始化极验参数信息
         # 1.initialize geetest parameter
-        captcha_id = '647f5ed2ed8acb4be36784e01553456bb71'
+        captcha_id = '647f5ed2ed8acb4be36784e01556bb71'
         captcha_key = 'b09a7aafbfd83f73b35a9b530d0337bf'
         api_server = 'http://gcaptcha4.geetest.com'
 
