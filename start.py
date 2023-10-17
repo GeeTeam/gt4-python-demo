@@ -17,7 +17,7 @@ class LoginHandler(tornado.web.RequestHandler):
     def post(self):
         # 1.初始化极验参数信息
         # 1.initialize geetest parameter
-        captcha_id = '647f5ed2ed8acb4be36784e01556bb71'
+        captcha_id = '647f5ed2ed8acb4be36784e01553456bb71'
         captcha_key = 'b09a7aafbfd83f73b35a9b530d0337bf'
         api_server = 'http://gcaptcha4.geetest.com'
 
@@ -63,9 +63,11 @@ class LoginHandler(tornado.web.RequestHandler):
 
         # 5.根据极验返回的用户验证状态, 网站主进行自己的业务逻辑
         # 5. taking the user authentication status returned from geetest into consideration, the website owner follows his own business logic
-        if gt_msg['result'] == 'success':
+        if 'status' in gt_msg and gt_msg['status'] == 'error':
+            self.write({'login': 'exception', 'reason': gt_msg['msg']})
+        elif 'result' in gt_msg and gt_msg['result'] == 'success':
             self.write({'login': 'success', 'reason': gt_msg['reason']})
-        else:
+        elif 'result' in gt_msg and gt_msg['result'] == 'fail':
             self.write({'login': 'fail', 'reason': gt_msg['reason']})
 
 
