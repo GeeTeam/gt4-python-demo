@@ -63,9 +63,11 @@ class LoginHandler(tornado.web.RequestHandler):
 
         # 5.根据极验返回的用户验证状态, 网站主进行自己的业务逻辑
         # 5. taking the user authentication status returned from geetest into consideration, the website owner follows his own business logic
-        if gt_msg['result'] == 'success':
+        if 'status' in gt_msg and gt_msg['status'] == 'error':
+            self.write({'login': 'exception', 'reason': gt_msg['msg']})
+        elif 'result' in gt_msg and gt_msg['result'] == 'success':
             self.write({'login': 'success', 'reason': gt_msg['reason']})
-        else:
+        elif 'result' in gt_msg and gt_msg['result'] == 'fail':
             self.write({'login': 'fail', 'reason': gt_msg['reason']})
 
 
